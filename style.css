@@ -42,8 +42,8 @@ nav {
 }
 
 .logo {
-    font-size: 1.8rem;
-    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
     color: var(--cyan);
     text-decoration: none;
 }
@@ -51,6 +51,12 @@ nav {
 .logo span {
     color: var(--white);
     margin-left: 5px;
+}
+
+.logo img {
+    height: 44px;
+    width: auto;
+    display: block;
 }
 
 .nav-links {
