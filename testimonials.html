@@ -8,138 +8,69 @@
 </head>
 <body>
     <!-- Header -->
-    <header>
-        <nav>
-            <a href="index.html" class="logo">🤓 <span>FIX IT NERD</span></a>
+    <header class="site-header">
+        <nav class="nav-shell">
+            <a href="index.html" class="logo"><img src="assets/logo.png" alt="Fix It Nerd logo"><span>FixItNerd</span></a>
             <ul class="nav-links">
                 <li><a href="index.html#services">Services</a></li>
-                <li><a href="portfolio.html">Portfolio</a></li>
-                <li><a href="pricing.html">Pricing</a></li>
+                <li><a href="pricing.html">Bundles</a></li>
                 <li><a href="testimonials.html">Testimonials</a></li>
                 <li><a href="index.html#contact">Contact</a></li>
-                <li><a href="index.html#contact" class="cta-button">Get Free Estimate</a></li>
+                <li><a href="index.html#contact" class="cta-button">Get a Free Quote</a></li>
             </ul>
         </nav>
     </header>
 
-    <!-- Page Title -->
-    <section class="page-title">
-        <h1>What Our Clients Say</h1>
-        <p>Real feedback from satisfied customers</p>
+    <section class="section-shell">
+        <div class="section-heading">
+            <h1 class="section-title">What Our Clients Say</h1>
+            <p>Real feedback from people who needed clear, friendly tech help.</p>
+        </div>
+
+        <div class="card-grid">
+            <article class="service-tile testimonial-tile">
+                <div class="stars">★★★★★</div>
+                <p class="testimonial-text">"Fixed my laptop fast and explained everything without jargon. It feels like new."</p>
+                <div class="testimonial-author">- Sarah M.</div>
+                <p class="muted">Computer Repair & Optimization</p>
+            </article>
+            <article class="service-tile testimonial-tile">
+                <div class="stars">★★★★★</div>
+                <p class="testimonial-text">"Built a custom tool that saved us hours every week. Great communication start to finish."</p>
+                <div class="testimonial-author">- John P., Owner</div>
+                <p class="muted">Custom Software Development</p>
+            </article>
+            <article class="service-tile testimonial-tile">
+                <div class="stars">★★★★★</div>
+                <p class="testimonial-text">"The 3D printed parts fit perfectly and cost far less than replacements."</p>
+                <div class="testimonial-author">- Mike T.</div>
+                <p class="muted">3D Printing Services</p>
+            </article>
+            <article class="service-tile testimonial-tile">
+                <div class="stars">★★★★★</div>
+                <p class="testimonial-text">"Our WiFi finally works everywhere. Secure, reliable, and easy to manage."</p>
+                <div class="testimonial-author">- Jennifer L.</div>
+                <p class="muted">Network Setup & IT Support</p>
+            </article>
+            <article class="service-tile testimonial-tile">
+                <div class="stars">★★★★★</div>
+                <p class="testimonial-text">"Tutoring made coding fun. My kid went from frustrated to confident."</p>
+                <div class="testimonial-author">- David & Karen S.</div>
+                <p class="muted">Coding Tutoring</p>
+            </article>
+            <article class="service-tile testimonial-tile">
+                <div class="stars">★★★★★</div>
+                <p class="testimonial-text">"Recovered our family photos after a drive crash. Professional and kind."</p>
+                <div class="testimonial-author">- Linda C.</div>
+                <p class="muted">Data Recovery</p>
+            </article>
+        </div>
     </section>
 
-    <!-- Content -->
-    <section class="content">
-        <!-- Stats Section -->
-        <!--
-        <div class="stats">
-            <div class="stat">
-                <div class="number">500+</div>
-                <p>Happy Clients</p>
-            </div>
-            <div class="stat">
-                <div class="number">4.9★</div>
-                <p>Average Rating</p>
-            </div>
-            <div class="stat">
-                <div class="number">10+</div>
-                <p>Years Experience</p>
-            </div>
-            <div class="stat">
-                <div class="number">98%</div>
-                <p>Satisfaction Rate</p>
-            </div>
-        </div>
-        -->
-
-        <!-- Testimonials Grid -->
-        <div class="testimonials-grid">
-            <!--
-            <div class="testimonial">
-                <div class="stars">★★★★★</div>
-                <p class="testimonial-text">"My computer was running so slow I thought I needed a new one. The Fix It Nerd guys diagnosed the problem, removed some nasty malware, and now it runs like new! They saved me hundreds of dollars."</p>
-                <div class="testimonial-author">- Sarah M.</div>
-                <div class="testimonial-service">Computer Repair & Optimization</div>
-            </div>
-
-            <div class="testimonial">
-                <div class="stars">★★★★★</div>
-                <p class="testimonial-text">"We needed a custom database for our business. Fix It Nerd built exactly what we needed, on budget, and on time. They explained everything in terms we could understand. Highly recommend!"</p>
-                <div class="testimonial-author">- John P., Owner</div>
-                <div class="testimonial-service">Custom Software Development</div>
-            </div>
-
-            <div class="testimonial">
-                <div class="stars">★★★★★</div>
-                <p class="testimonial-text">"I needed custom replacement parts for my equipment. They designed and printed them perfectly. Not only did it work, but it was way cheaper than buying new parts from the manufacturer!"</p>
-                <div class="testimonial-author">- Mike T.</div>
-                <div class="testimonial-service">3D Printing Services</div>
-            </div>
-
-            <div class="testimonial">
-                <div class="stars">★★★★★</div>
-                <p class="testimonial-text">"Our office network was a mess. Fix It Nerd came in, set everything up securely, and now our WiFi actually works everywhere. Best decision we made for our business!"</p>
-                <div class="testimonial-author">- Jennifer L.</div>
-                <div class="testimonial-service">Network Setup & IT Support</div>
-            </div>
-
-            <div class="testimonial">
-                <div class="stars">★★★★★</div>
-                <p class="testimonial-text">"My kid was struggling with coding. The tutor at Fix It Nerd made it fun and easy to understand. He went from dreading computer class to loving it! Thank you!"</p>
-                <div class="testimonial-author">- David & Karen S., Parents</div>
-                <div class="testimonial-service">Coding Tutoring</div>
-            </div>
-
-            <div class="testimonial">
-                <div class="stars">★★★★★</div>
-                <p class="testimonial-text">"I thought I lost all my family photos forever after my hard drive crashed. Fix It Nerd recovered everything! Friendly, professional, and they understood how important those memories were."</p>
-                <div class="testimonial-author">- Linda C.</div>
-                <div class="testimonial-service">Data Recovery</div>
-            </div>
-
-            <div class="testimonial">
-                <div class="stars">★★★★★</div>
-                <p class="testimonial-text">"They built a professional website for my small business that looks amazing and actually brings in customers. Great communication throughout the process and very affordable!"</p>
-                <div class="testimonial-author">- Robert K., Business Owner</div>
-                <div class="testimonial-service">Website Design & Development</div>
-            </div>
-
-            <div class="testimonial">
-                <div class="stars">★★★★★</div>
-                <p class="testimonial-text">"My computer got infected with a terrible virus. Fix It Nerd removed it completely and explained how to avoid it in the future. Super helpful and quick service!"</p>
-                <div class="testimonial-author">- Tom B.</div>
-                <div class="testimonial-service">Virus & Malware Removal</div>
-            </div>
-
-            <div class="testimonial">
-                <div class="stars">★★★★★</div>
-                <p class="testimonial-text">"We were wasting hours on repetitive tasks. Fix It Nerd created automation that saves us days of work every month. The ROI was immediate. Can't thank them enough!"</p>
-                <div class="testimonial-author">- Angela M., Manager</div>
-                <div class="testimonial-service">Workflow Automation</div>
-            </div>
-
-            <div class="testimonial">
-                <div class="stars">★★★★★</div>
-                <p class="testimonial-text">"From the initial consultation to final delivery, Fix It Nerd was professional, friendly, and patient. They explained tech stuff in a way that made sense. Going to recommend them to everyone I know!"</p>
-                <div class="testimonial-author">- Elizabeth R.</div>
-                <div class="testimonial-service">Multiple Services</div>
-            </div>
-
-            <div class="testimonial">
-                <div class="stars">★★★★★</div>
-                <p class="testimonial-text">"My son's school science project needed 3D printed parts. Fix It Nerd helped design and printed them, and his project won first place! He was so excited!"</p>
-                <div class="testimonial-author">- Michelle W., Parent</div>
-                <div class="testimonial-service">3D Printing for School Projects</div>
-            </div>
-            -->
-        </div>
-
-        <!-- CTA Section -->
-        <div style="background: var(--primary-light); padding: 2rem; border-radius: 10px; text-align: center;">
-            <h2 style="color: var(--accent); margin-bottom: 1rem;">Ready to Become Our Next Success Story?</h2>
-            <p style="margin-bottom: 1.5rem;">Join hundreds of satisfied customers who have experienced the Fix It Nerd difference. We'd love to help you with your tech needs!</p>
-            <a href="index.html#contact" class="cta-button">Get Your Free Estimate Today</a>
-        </div>
+    <section class="section-shell highlight-band cta-panel">
+        <h2>Ready to Become the Next Success Story?</h2>
+        <p>Join the customers who already trust FixItNerd for clear, fast tech help.</p>
+        <a href="index.html#contact" class="cta-button">Get Your Free Estimate Today</a>
     </section>
 
     <!-- Footer -->
