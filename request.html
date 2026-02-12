@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request Help | FixItNerd</title>
+    <link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body>
+    <header class="site-header">
+        <nav class="nav-shell">
+            <a href="index.html" class="logo"><img src="assets/logo.png" alt="Fix It Nerd logo"><span>FixItNerd</span></a>
+            <ul class="nav-links">
+                <li><a href="index.html#services">Services</a></li>
+                <li><a href="pricing.html">Bundles</a></li>
+                <li><a href="request.html" class="cta-button">Request a Quote</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="page-title">
+        <h1>Request Service</h1>
+        <p>Not sure what you need? We’ll help you figure it out — no pressure.</p>
+    </section>
+
+    <main class="page-shell">
+        <div class="panel">
+            <div class="notice">
+                No surprise fees. You’ll always see the estimate before you pay.
+            </div>
+            <form id="requestForm" class="form-grid">
+                <label>
+                    <span>Service Type *</span>
+                    <select name="service_type" required>
+                        <option value="">Select a service...</option>
+                        <option value="it_support">Computer Repair & IT Support</option>
+                        <option value="3d_printing">3D Printing</option>
+                        <option value="tutoring">Tutoring</option>
+                        <option value="dev">Development & Automation</option>
+                    </select>
+                </label>
+                <label>
+                    <span>Project Title *</span>
+                    <input type="text" name="title" required placeholder="e.g., Laptop running slow">
+                </label>
+                <label>
+                    <span>Project Description *</span>
+                    <textarea name="description" required placeholder="Tell us what’s going on and what you need."></textarea>
+                </label>
+                <div class="form-grid two-col">
+                    <label>
+                        <span>Urgency *</span>
+                        <select name="urgency" required>
+                            <option value="normal">Normal</option>
+                            <option value="rush">Rush</option>
+                        </select>
+                    </label>
+                    <label>
+                        <span>Preferred Contact Method</span>
+                        <select name="contact_method">
+                            <option value="email">Email</option>
+                        <option value="phone">Phone</option>
+                        </select>
+                    </label>
+                </div>
+                <div class="form-grid two-col">
+                    <label>
+                        <span>Your Name *</span>
+                        <input type="text" name="name" required>
+                    </label>
+                    <label>
+                        <span>Email *</span>
+                        <input type="email" name="email" required>
+                    </label>
+                </div>
+                <div class="form-grid two-col">
+                    <label>
+                        <span>Phone (optional)</span>
+                        <input type="tel" name="phone">
+                    </label>
+                    <label>
+                        <span>Location (optional)</span>
+                        <input type="text" name="location" placeholder="Charlotte, NC">
+                    </label>
+                </div>
+                <label>
+                    <span>Budget (optional)</span>
+                    <input type="text" name="budget" placeholder="$100 - $250">
+                </label>
+                <label>
+                    <span>Paste link(s) to files (optional)</span>
+                    <textarea name="asset_links" placeholder="Paste Google Drive, Dropbox, or image links. Separate multiple links with commas or new lines."></textarea>
+                </label>
+                <button type="submit" class="cta-button">Send Request</button>
+                <p class="helper-text" id="requestStatus"></p>
+            </form>
+        </div>
+
+        <div id="requestSuccess" class="panel" style="display:none;">
+            <h2>Request received</h2>
+            <p>We’re reviewing it now. Use this link to track updates:</p>
+            <p><a id="statusLink" class="text-link" href="#">View request status</a></p>
+        </div>
+    </main>
+
+    <footer>
+        <p><strong>Fix It Nerd</strong> - Tech Help Without the Headache</p>
+        <p>Local • Fast • Affordable • Friendly 😎</p>
+        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--text-gray);">© 2026 Fix It Nerd. All rights reserved.</p>
+    </footer>
+
+    <script type="module" src="assets/js/requestForm.js"></script>
+</body>
+</html>

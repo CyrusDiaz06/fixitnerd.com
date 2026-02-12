@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request Status | FixItNerd</title>
+    <link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body>
+    <header class="site-header">
+        <nav class="nav-shell">
+            <a href="index.html" class="logo"><img src="assets/logo.png" alt="Fix It Nerd logo"><span>FixItNerd</span></a>
+            <ul class="nav-links">
+                <li><a href="pricing.html">Bundles</a></li>
+                <li><a href="request.html" class="cta-button">Request a Quote</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="page-title">
+        <h1>Request Status</h1>
+        <p>Track your request and pay your invoice when it’s ready.</p>
+    </section>
+
+    <main class="page-shell">
+        <div class="panel">
+            <div id="statusMessage" class="helper-text">Loading request...</div>
+            <div id="requestSummary" style="display:none;">
+                <h2 id="requestTitle"></h2>
+                <div class="inline-actions">
+                    <span class="status-badge" id="requestStatusBadge"></span>
+                    <span class="token-chip" id="requestService"></span>
+                </div>
+                <p id="requestDescription"></p>
+                <div class="info-grid" id="requestMeta"></div>
+            </div>
+        </div>
+
+        <div class="panel" id="estimatePanel" style="display:none;">
+            <h2>Estimate</h2>
+            <div id="estimateItems"></div>
+            <p class="estimate-total" id="estimateTotal"></p>
+            <div class="inline-actions" id="paymentActions"></div>
+        </div>
+
+        <div class="panel" id="previewPanel" style="display:none;">
+            <h2>AI Previews</h2>
+            <div class="card-grid" id="previewGrid"></div>
+        </div>
+    </main>
+
+    <footer>
+        <p><strong>Fix It Nerd</strong> - Tech Help Without the Headache</p>
+        <p>Local • Fast • Affordable • Friendly 😎</p>
+        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--text-gray);">© 2026 Fix It Nerd. All rights reserved.</p>
+    </footer>
+
+    <script type="module" src="assets/js/customerStatus.js"></script>
+</body>
+</html>

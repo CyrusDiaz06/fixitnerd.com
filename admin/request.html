@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request Detail | FixItNerd</title>
+    <link rel="stylesheet" href="../assets/css/app.css">
+</head>
+<body>
+    <header class="site-header">
+        <nav class="nav-shell">
+            <a href="../index.html" class="logo"><img src="../assets/logo.png" alt="Fix It Nerd logo"><span>FixItNerd</span></a>
+            <ul class="nav-links">
+                <li><a href="queue.html">Queue</a></li>
+                <li><a href="../request.html" class="ghost-button">New Request</a></li>
+                <li><a href="#" id="logoutBtn" class="cta-button">Log Out</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="page-title">
+        <h1>Request Detail</h1>
+        <p>Review the request, build an estimate, and send the invoice.</p>
+    </section>
+
+    <main class="page-shell">
+        <div class="panel" id="requestPanel">
+            <p class="helper-text">Loading request...</p>
+        </div>
+
+        <div class="panel" id="adminNotesPanel" style="display:none;">
+            <h2>Admin Notes</h2>
+            <textarea id="adminNotes" rows="4"></textarea>
+            <div class="inline-actions">
+                <label>
+                    <span>Status</span>
+                    <select id="statusSelect"></select>
+                </label>
+                <button class="ghost-button" id="saveNotesBtn">Save Notes + Status</button>
+            </div>
+            <p class="helper-text" id="notesStatus"></p>
+        </div>
+
+        <div class="panel" id="estimatePanel" style="display:none;">
+            <h2>Estimate Builder</h2>
+            <p class="helper-text">Unit prices are in dollars (e.g., 49.00).</p>
+            <div class="inline-actions" id="suggestedActions"></div>
+            <div id="estimateItems"></div>
+            <div class="inline-actions">
+                <button class="ghost-button" id="addLineItem">Add line item</button>
+                <button class="ghost-button" id="saveEstimate">Save estimate</button>
+                <button class="cta-button" id="sendInvoice">Send invoice</button>
+            </div>
+            <p class="estimate-total" id="estimateTotal"></p>
+            <p class="helper-text" id="estimateStatus"></p>
+        </div>
+
+        <div class="panel" id="assetsPanel" style="display:none;">
+            <h2>Assets</h2>
+            <div id="assetsList"></div>
+        </div>
+
+        <div class="panel" id="activityPanel" style="display:none;">
+            <h2>Activity</h2>
+            <div id="activityList"></div>
+        </div>
+
+        <div class="panel" id="aiPanel" style="display:none;">
+            <h2>AI Previews</h2>
+            <p class="helper-text">Generate preview images for 3D printing requests.</p>
+            <button class="ghost-button" id="generatePreviews">Generate AI Previews</button>
+            <p class="helper-text" id="aiStatus"></p>
+        </div>
+    </main>
+
+    <footer>
+        <p><strong>Fix It Nerd</strong> - Admin Console</p>
+    </footer>
+
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <script type="module" src="../assets/js/adminRequestDetail.js"></script>
+</body>
+</html>

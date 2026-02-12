@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login | FixItNerd</title>
+    <link rel="stylesheet" href="../assets/css/app.css">
+</head>
+<body>
+    <header class="site-header">
+        <nav class="nav-shell">
+            <a href="../index.html" class="logo"><img src="../assets/logo.png" alt="Fix It Nerd logo"><span>FixItNerd</span></a>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="queue.html" class="cta-button">Admin Queue</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="page-title">
+        <h1>Admin Login</h1>
+        <p>Sign in with Netlify Identity to access the request queue.</p>
+    </section>
+
+    <main class="page-shell">
+        <div class="panel">
+            <div id="identityWidget"></div>
+            <p class="helper-text" id="loginStatus"></p>
+        </div>
+    </main>
+
+    <footer>
+        <p><strong>Fix It Nerd</strong> - Tech Help Without the Headache</p>
+        <p>Local • Fast • Affordable • Friendly 😎</p>
+    </footer>
+
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <script type="module" src="../assets/js/identity.js"></script>
+</body>
+</html>

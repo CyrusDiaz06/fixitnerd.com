@@ -1,0 +1,14 @@
+{
+  "name": "fixitnerd-site",
+  "version": "1.0.0",
+  "private": true,
+  "description": "FixItNerd Netlify site with request intake, admin queue, and Stripe payments.",
+  "type": "commonjs",
+  "dependencies": {
+    "@sendgrid/mail": "^8.1.3",
+    "@supabase/supabase-js": "^2.49.1",
+    "jose": "^5.2.4",
+    "resend": "^3.5.0",
+    "stripe": "^14.25.0"
+  }
+}

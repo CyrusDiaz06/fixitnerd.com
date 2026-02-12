@@ -1,0 +1,12 @@
+{
+  "name": "fixitnerd-functions",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@sendgrid/mail": "^8.1.3",
+    "@supabase/supabase-js": "^2.49.1",
+    "jose": "^5.2.4",
+    "resend": "^3.5.0",
+    "stripe": "^14.25.0"
+  }
+}

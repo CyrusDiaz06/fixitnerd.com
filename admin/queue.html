@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Queue | FixItNerd</title>
+    <link rel="stylesheet" href="../assets/css/app.css">
+</head>
+<body>
+    <header class="site-header">
+        <nav class="nav-shell">
+            <a href="../index.html" class="logo"><img src="../assets/logo.png" alt="Fix It Nerd logo"><span>FixItNerd</span></a>
+            <ul class="nav-links">
+                <li><a href="queue.html">Queue</a></li>
+                <li><a href="../request.html" class="ghost-button">New Request</a></li>
+                <li><a href="#" id="logoutBtn" class="cta-button">Log Out</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="page-title">
+        <h1>Request Queue</h1>
+        <p>Track, prioritize, and move requests through the pipeline.</p>
+    </section>
+
+    <main class="page-shell">
+        <div class="panel">
+            <div class="inline-actions">
+                <span class="token-chip">Signed in as <span id="adminEmail">...</span></span>
+                <button class="ghost-button" id="refreshQueue">Refresh</button>
+            </div>
+            <p class="helper-text" id="queueStatus">Loading requests...</p>
+        </div>
+
+        <div class="kanban-board" id="kanbanBoard"></div>
+    </main>
+
+    <footer>
+        <p><strong>Fix It Nerd</strong> - Admin Console</p>
+    </footer>
+
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <script type="module" src="../assets/js/adminQueue.js"></script>
+</body>
+</html>
