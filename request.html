@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Request a Quote - Fix It Nerd</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body class="app-shell request-page">
+  <header class="site-header">
+    <nav class="nav-shell">
+      <a href="index.html" class="logo"><img src="assets/logo.png" alt="Fix It Nerd logo"><span>FixItNerd</span></a>
+      <ul class="nav-links">
+        <li><a href="index.html#services">Services</a></li>
+        <li><a href="pricing.html">Bundles</a></li>
+        <li><a href="testimonials.html">Testimonials</a></li>
+        <li><a href="request.html">Contact</a></li>
+        <li><a href="request.html" class="cta-button">Request a Quote</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="app-hero">
+    <h1>Request a Quote</h1>
+    <p>Share a few details and the agent will send back a tailored estimate. You’ll receive a tracking link by email.</p>
+  </section>
+
+  <main class="app-container">
+    <div class="app-card">
+      <form id="requestForm" class="app-form">
+        <div class="app-grid two">
+          <label>
+            <span>Name *</span>
+            <input type="text" name="name" required>
+          </label>
+          <label>
+            <span>Email *</span>
+            <input type="email" name="email" required>
+          </label>
+          <label>
+            <span>Phone</span>
+            <input type="tel" name="phone">
+          </label>
+          <label>
+            <span>Service Type *</span>
+            <select name="service_type" required>
+              <option value="">Select a service</option>
+              <option value="computer-repair">Computer Repair & IT Support</option>
+              <option value="software-dev">Software Development</option>
+              <option value="3d-printing">3D Printing Services</option>
+              <option value="tutoring">Tutoring Services</option>
+              <option value="other">Other</option>
+            </select>
+          </label>
+          <label>
+            <span>Urgency</span>
+            <select name="urgency">
+              <option value="standard">Standard</option>
+              <option value="rush">Rush (48 hours)</option>
+              <option value="priority">Priority (same week)</option>
+            </select>
+          </label>
+          <label>
+            <span>Project Title *</span>
+            <input type="text" name="title" required>
+          </label>
+        </div>
+        <label>
+          <span>Project Details *</span>
+          <textarea name="description" required></textarea>
+        </label>
+        <label>
+          <span>Reference Links (one per line)</span>
+          <textarea name="asset_urls" placeholder="https://example.com/reference"></textarea>
+        </label>
+        <button type="submit" class="app-button">Submit Request</button>
+      </form>
+      <p id="formStatus" class="notice" role="status"></p>
+    </div>
+  </main>
+
+  <script src="assets/js/requestForm.js"></script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Request Status - Fix It Nerd</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body class="app-shell">
+  <header class="site-header">
+    <nav class="nav-shell">
+      <a href="index.html" class="logo"><img src="assets/logo.png" alt="Fix It Nerd logo"><span>FixItNerd</span></a>
+      <ul class="nav-links">
+        <li><a href="index.html#services">Services</a></li>
+        <li><a href="pricing.html">Bundles</a></li>
+        <li><a href="testimonials.html">Testimonials</a></li>
+        <li><a href="request.html">Contact</a></li>
+        <li><a href="request.html" class="cta-button">Request a Quote</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="app-hero">
+    <h1>Request Status</h1>
+    <p>Track the progress of your request and pay once the estimate is ready.</p>
+  </section>
+
+  <main class="app-container">
+    <div id="statusCard" class="app-card">
+      <p id="statusMeta" class="app-pill">Loading...</p>
+      <h2>Your Request</h2>
+      <div class="app-status pending"><span></span><strong class="status-text">Pending</strong></div>
+      <div class="app-grid two" style="margin-top: 1.5rem;">
+        <div>
+          <h3>Estimate</h3>
+          <ul id="estimateItems"></ul>
+          <p><strong>Total:</strong> <span id="estimateTotal">$0.00</span></p>
+        </div>
+        <div>
+          <h3>Next Steps</h3>
+          <p>We’ll send an invoice when your estimate is ready. Use the button below to pay securely.</p>
+          <a id="payButton" class="app-button hidden" target="_blank" rel="noopener">Pay Invoice</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="assets/js/customerStatus.js"></script>
+</body>
+</html>

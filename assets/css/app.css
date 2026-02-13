@@ -1,0 +1,241 @@
+:root {
+  --app-bg: #0f1216;
+  --app-panel: #151a21;
+  --app-panel-2: #1c2230;
+  --app-border: #2a3140;
+  --app-text: #f2f5f8;
+  --app-muted: #a6b0c0;
+  --app-accent: #35d0a6;
+  --app-accent-2: #4aa3ff;
+  --app-danger: #ff6b6b;
+  --app-warning: #ffb347;
+  --app-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+  --app-radius: 16px;
+}
+
+body.app-shell {
+  background: radial-gradient(circle at top, rgba(53, 208, 166, 0.08), transparent 45%),
+    radial-gradient(circle at 20% 10%, rgba(74, 163, 255, 0.08), transparent 40%),
+    var(--app-bg);
+  color: var(--app-text);
+  font-family: "Segoe UI", system-ui, sans-serif;
+  min-height: 100vh;
+}
+
+.app-hero {
+  padding: 4rem 6vw 2rem;
+  text-align: left;
+}
+
+.app-hero h1 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  margin-bottom: 0.5rem;
+}
+
+.app-hero p {
+  max-width: 640px;
+  color: var(--app-muted);
+}
+
+.request-page .app-hero {
+  text-align: center;
+}
+
+.request-page .app-hero p {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.app-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 6vw 4rem;
+}
+
+.app-card {
+  background: var(--app-panel);
+  border: 1px solid var(--app-border);
+  border-radius: var(--app-radius);
+  padding: 2rem;
+  box-shadow: var(--app-shadow);
+}
+
+.app-grid {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.app-grid.two {
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.app-grid.three {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.app-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-weight: 600;
+  color: var(--app-text);
+}
+
+.app-form input,
+.app-form select,
+.app-form textarea {
+  background: var(--app-panel-2);
+  border: 1px solid var(--app-border);
+  color: var(--app-text);
+  padding: 0.75rem 0.85rem;
+  border-radius: 12px;
+  font-size: 1rem;
+}
+
+.app-form textarea {
+  min-height: 140px;
+  resize: vertical;
+}
+
+.app-button {
+  background: var(--app-accent);
+  color: #06130f;
+  border: none;
+  border-radius: 999px;
+  padding: 0.75rem 1.6rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.app-button.secondary {
+  background: transparent;
+  border: 1px solid var(--app-border);
+  color: var(--app-text);
+}
+
+.app-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+}
+
+.request-page .app-form .app-button {
+  display: block;
+  margin: 1.5rem auto 0;
+}
+
+.app-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  background: var(--app-panel-2);
+  color: var(--app-muted);
+  border: 1px solid var(--app-border);
+}
+
+.app-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+}
+
+.app-status span {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--app-accent);
+}
+
+.app-status.pending span {
+  background: var(--app-warning);
+}
+
+.app-status.paid span {
+  background: var(--app-accent);
+}
+
+.app-status.error span {
+  background: var(--app-danger);
+}
+
+.kanban {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.kanban-column {
+  background: var(--app-panel);
+  border: 1px solid var(--app-border);
+  border-radius: var(--app-radius);
+  padding: 1rem;
+}
+
+.kanban-column h3 {
+  margin-bottom: 1rem;
+}
+
+.kanban-card {
+  background: var(--app-panel-2);
+  border: 1px solid var(--app-border);
+  border-radius: 12px;
+  padding: 0.85rem;
+  margin-bottom: 0.75rem;
+}
+
+.kanban-card a {
+  color: var(--app-text);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.estimate-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.estimate-table th,
+.estimate-table td {
+  border-bottom: 1px solid var(--app-border);
+  padding: 0.6rem 0.4rem;
+  text-align: left;
+  font-size: 0.95rem;
+}
+
+.estimate-table input {
+  width: 100%;
+}
+
+.notice {
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  background: rgba(74, 163, 255, 0.12);
+  border: 1px solid rgba(74, 163, 255, 0.4);
+  color: var(--app-text);
+  font-size: 0.95rem;
+}
+
+.notice.warn {
+  background: rgba(255, 179, 71, 0.12);
+  border-color: rgba(255, 179, 71, 0.5);
+}
+
+.notice.error {
+  background: rgba(255, 107, 107, 0.12);
+  border-color: rgba(255, 107, 107, 0.5);
+}
+
+.hidden {
+  display: none;
+}
+
+@media (max-width: 720px) {
+  .app-hero {
+    padding-top: 2.5rem;
+  }
+}
