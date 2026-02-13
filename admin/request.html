@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Request Detail - Fix It Nerd</title>
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="../assets/css/app.css">
+</head>
+<body class="app-shell">
+  <header class="site-header">
+    <nav class="nav-shell">
+      <a href="/index.html" class="logo"><img src="../assets/logo.png" alt="Fix It Nerd logo"><span>FixItNerd</span></a>
+      <ul class="nav-links">
+        <li><a href="/admin/queue.html">Queue</a></li>
+        <li><button class="cta-button" id="logoutBtn">Logout</button></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="app-hero">
+    <h1>Request Detail</h1>
+    <p>Review the request, build an estimate, and send the payment link.</p>
+  </section>
+
+  <main class="app-container app-grid two">
+    <div id="requestDetail" class="app-card">
+      <h2>Loading...</h2>
+      <p id="requestMeta" class="app-pill"></p>
+      <p id="requestCustomer" class="app-pill"></p>
+      <p id="requestDescription"></p>
+      <h3>Assets</h3>
+      <ul id="assetList"></ul>
+
+      <label>
+        <span>Status</span>
+        <select id="statusSelect">
+          <option value="NEW">NEW</option>
+          <option value="ESTIMATING">ESTIMATING</option>
+          <option value="SENT_TO_CUSTOMER">SENT TO CUSTOMER</option>
+          <option value="PAID">PAID</option>
+          <option value="ARCHIVED">ARCHIVED</option>
+        </select>
+      </label>
+
+      <form id="notesForm" class="app-form" style="margin-top: 1rem;">
+        <label>
+          <span>Admin Notes</span>
+          <textarea id="adminNotes"></textarea>
+        </label>
+        <button class="app-button" type="submit">Save Notes</button>
+      </form>
+
+      <button id="generatePreview" class="app-button secondary" type="button">Generate AI Preview</button>
+    </div>
+
+    <div class="app-card">
+      <h2>Estimate Builder</h2>
+      <table class="estimate-table">
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Description</th>
+            <th>Qty</th>
+            <th>Unit (cents)</th>
+            <th>Total</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="estimateBody"></tbody>
+      </table>
+      <p><strong>Total:</strong> <span id="estimateTotal">$0.00</span></p>
+      <div class="app-grid two">
+        <button id="saveEstimate" class="app-button">Save Estimate</button>
+        <button id="sendInvoice" class="app-button secondary">Send Invoice</button>
+      </div>
+      <h3>Activity</h3>
+      <ul id="activityList"></ul>
+    </div>
+  </main>
+
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <script src="../assets/js/identity.js"></script>
+  <script src="../assets/js/adminRequestDetail.js"></script>
+  <script>
+    document.querySelector("#logoutBtn").addEventListener("click", () => {
+      window.Identity.logout();
+      window.location.href = "/admin/login.html";
+    });
+  </script>
+</body>
+</html>

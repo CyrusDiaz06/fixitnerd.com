@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login - Fix It Nerd</title>
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="../assets/css/app.css">
+</head>
+<body class="app-shell">
+  <header class="site-header">
+    <nav class="nav-shell">
+      <a href="/index.html" class="logo"><img src="../assets/logo.png" alt="Fix It Nerd logo"><span>FixItNerd</span></a>
+      <ul class="nav-links">
+        <li><a href="/request.html">Request a Quote</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="app-hero">
+    <h1>Admin Login</h1>
+    <p>Sign in with Netlify Identity to manage requests and estimates.</p>
+  </section>
+
+  <main class="app-container">
+    <div class="app-card">
+      <p class="notice">Use your admin email to sign in. If you need access, ask to be invited.</p>
+      <button id="loginBtn" class="app-button">Open Login</button>
+    </div>
+  </main>
+
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <script src="../assets/js/identity.js"></script>
+  <script>
+    document.querySelector("#loginBtn").addEventListener("click", () => {
+      window.Identity.openLogin();
+    });
+
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on("login", () => {
+        window.location.href = "/admin/queue.html";
+      });
+    }
+  </script>
+</body>
+</html>
