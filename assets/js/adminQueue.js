@@ -136,12 +136,13 @@ async function loadQueue() {
       throw new Error("Unable to load requests.");
     }
 
+    const requests = Array.isArray(data?.requests) ? data.requests : [];
     const grouped = statuses.reduce((acc, status) => {
       acc[status] = [];
       return acc;
     }, {});
 
-    data.requests.forEach((request) => {
+    requests.forEach((request) => {
       const list = grouped[request.status] || grouped.NEW;
       list.push(request);
     });
@@ -151,7 +152,12 @@ async function loadQueue() {
       queueEl.appendChild(buildColumn(status, grouped[status] || []));
     });
 
-    setStatus(`Loaded ${data.requests.length} requests.`);
+    if (requests.length === 0) {
+      setStatus("No requests yet");
+      return;
+    }
+
+    setStatus(`Loaded ${requests.length} requests.`);
   } catch (error) {
     setStatus(error.message || "Unable to load queue.", "error");
   }
