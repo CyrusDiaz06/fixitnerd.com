@@ -1,12 +1,23 @@
 import crypto from "node:crypto";
-import { getEnv, supabaseInsert, supabaseFetch } from "./_lib/supabase.js";
+import { getEnv, supabaseInsert } from "./_lib/supabase.js";
 import { sendEmail } from "./_lib/email.js";
 
-function jsonResponse(payload, status = 200) {
-  return new Response(JSON.stringify(payload), {
-    status,
-    headers: { "Content-Type": "application/json" },
-  });
+function baseHeaders() {
+  return {
+    "Content-Type": "application/json; charset=utf-8",
+    "Cache-Control": "no-store",
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Headers": "Content-Type, Authorization",
+    "Access-Control-Allow-Methods": "POST, OPTIONS",
+  };
+}
+
+function json(statusCode, payload) {
+  return {
+    statusCode,
+    headers: baseHeaders(),
+    body: JSON.stringify(payload),
+  };
 }
 
 function generatePublicId() {
@@ -15,28 +26,32 @@ function generatePublicId() {
 
 function buildTrackingLink(publicId) {
   const siteUrl = getEnv("NETLIFY_SITE_URL") || "";
-  if (!siteUrl) {
-    return `/request-status.html?id=${publicId}`;
-  }
+  if (!siteUrl) return `/request-status.html?id=${publicId}`;
   return `${siteUrl.replace(/\/$/, "")}/request-status.html?id=${publicId}`;
 }
 
-export default async (req) => {
-  if (req.method !== "POST") {
-    return jsonResponse({ error: "Method not allowed." }, 405);
+// Standard Netlify Function handler (NOT Edge)
+export const handler = async (event) => {
+  // CORS preflight
+  if (event.httpMethod === "OPTIONS") {
+    return { statusCode: 204, headers: baseHeaders(), body: "" };
   }
 
-  let payload = null;
+  if (event.httpMethod !== "POST") {
+    return json(405, { ok: false, error: "Method not allowed." });
+  }
+
+  let payload;
   try {
-    payload = await req.json();
-  } catch (error) {
-    return jsonResponse({ error: "Invalid JSON body." }, 400);
+    payload = JSON.parse(event.body || "{}");
+  } catch {
+    return json(400, { ok: false, error: "Invalid JSON body." });
   }
 
   const requiredFields = ["service_type", "title", "description", "name", "email"];
-  const missing = requiredFields.filter((field) => !payload || !payload[field]);
+  const missing = requiredFields.filter((field) => !payload?.[field]);
   if (missing.length > 0) {
-    return jsonResponse({ error: `Missing fields: ${missing.join(", ")}.` }, 400);
+    return json(400, { ok: false, error: `Missing fields: ${missing.join(", ")}.` });
   }
 
   const publicId = generatePublicId();
@@ -55,62 +70,57 @@ export default async (req) => {
 
   const insertRequest = await supabaseInsert("requests", [requestRow]);
   if (!insertRequest.ok) {
-    return jsonResponse({ error: insertRequest.error || "Failed to save request." }, 500);
+    // Keep errors ASCII-only so nothing weird can break the response
+    const err = String(insertRequest.error || "Failed to save request.").replace(/[^\x00-\x7F]/g, "");
+    return json(500, { ok: false, error: err });
   }
 
-  const savedRequest = insertRequest.data[0];
-
-  if (Array.isArray(payload.assets) && payload.assets.length > 0) {
-    const assets = payload.assets
-      .filter((asset) => asset && asset.asset_url)
-      .map((asset) => ({
-        request_id: savedRequest.id,
-        asset_url: asset.asset_url,
-        asset_type: asset.asset_type || null,
-        file_name: asset.file_name || null,
-        file_size: asset.file_size || null,
-      }));
-
-    if (assets.length > 0) {
-      await supabaseInsert("request_assets", assets);
-    }
-  }
-
-  await supabaseInsert("activity_log", [
-    {
-      request_id: savedRequest.id,
-      event_type: "REQUEST_CREATED",
-      message: "Customer submitted a new request.",
-    },
-  ]);
-
-  const warnings = [];
+  const savedRequest = insertRequest.data?.[0];
   const trackingLink = buildTrackingLink(publicId);
-  const customerEmailResult = await sendEmail({
-    to: payload.email,
-    subject: "We received your request",
-    text: `Thanks for reaching out! Track your request here: ${trackingLink}`,
-    html: `<p>Thanks for reaching out!</p><p>Track your request here: <a href="${trackingLink}">${trackingLink}</a></p>`,
-  });
 
-  if (!customerEmailResult.sent && customerEmailResult.warning) {
-    warnings.push(customerEmailResult.warning);
+  // Email is non-blocking (launch day rule)
+  const warnings = [];
+
+  try {
+    const customerEmailResult = await sendEmail({
+      to: payload.email,
+      subject: "We received your request",
+      text: `Thanks for reaching out! Track your request here: ${trackingLink}`,
+      html: `<p>Thanks for reaching out!</p><p>Track your request here: <a href="${trackingLink}">${trackingLink}</a></p>`,
+    });
+
+    if (!customerEmailResult?.sent && customerEmailResult?.warning) {
+      warnings.push(String(customerEmailResult.warning).replace(/[^\x00-\x7F]/g, ""));
+    }
+  } catch {
+    warnings.push("Customer email failed (non-blocking).");
   }
 
   const adminEmail = getEnv("ADMIN_NOTIFY_EMAIL");
   if (adminEmail) {
-    const adminResult = await sendEmail({
-      to: adminEmail,
-      subject: "New request submitted",
-      text: `${payload.name} submitted a request: ${payload.title}`,
-      html: `<p><strong>${payload.name}</strong> submitted a request.</p><p>${payload.title}</p>`,
-    });
-    if (!adminResult.sent && adminResult.warning) {
-      warnings.push(adminResult.warning);
+    try {
+      const adminResult = await sendEmail({
+        to: adminEmail,
+        subject: "New request submitted",
+        text: `${payload.name} submitted a request: ${payload.title}`,
+        html: `<p><strong>${payload.name}</strong> submitted a request.</p><p>${payload.title}</p>`,
+      });
+
+      if (!adminResult?.sent && adminResult?.warning) {
+        warnings.push(String(adminResult.warning).replace(/[^\x00-\x7F]/g, ""));
+      }
+    } catch {
+      warnings.push("Admin email failed (non-blocking).");
     }
   } else {
     warnings.push("ADMIN_NOTIFY_EMAIL is not configured.");
   }
 
-  return jsonResponse({ public_id: publicId, warning: warnings.length ? warnings.join(" ") : undefined });
+  return json(200, {
+    ok: true,
+    request_id: savedRequest?.id,
+    public_id: publicId,
+    tracking_link: trackingLink,
+    warning: warnings.length ? warnings.join(" ") : undefined,
+  });
 };
