@@ -11,19 +11,59 @@ function formatDate(value) {
   return new Date(value).toLocaleDateString();
 }
 
-async function updateStatus(id, status) {
+function waitForIdentityInit() {
+  return new Promise((resolve, reject) => {
+    if (!window.netlifyIdentity) {
+      reject(new Error("Netlify Identity not available."));
+      return;
+    }
+    let resolved = false;
+    const finish = (user) => {
+      if (resolved) {
+        return;
+      }
+      resolved = true;
+      resolve(user);
+    };
+    window.netlifyIdentity.on("init", finish);
+    window.netlifyIdentity.init();
+  });
+}
+
+async function adminFetch(url, options = {}) {
   const token = await window.Identity.getToken();
-  const response = await fetch("/.netlify/functions/admin-update-status", {
+  const headers = new Headers(options.headers || {});
+  headers.set("Authorization", `Bearer ${token}`);
+  return fetch(url, { ...options, headers });
+}
+
+async function readJsonSafe(response) {
+  const text = await response.text();
+  if (!text) {
+    return null;
+  }
+  try {
+    return JSON.parse(text);
+  } catch (error) {
+    return text;
+  }
+}
+
+async function updateStatus(id, status) {
+  const response = await adminFetch("/.netlify/functions/admin-update-status", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({ id, status }),
   });
   if (!response.ok) {
-    const data = await response.json();
-    throw new Error(data.error || "Unable to update status.");
+    const data = await readJsonSafe(response);
+    const message =
+      data && typeof data === "object"
+        ? data.error || "Unable to update status."
+        : data || "Unable to update status.";
+    throw new Error(message);
   }
 }
 
@@ -78,17 +118,22 @@ function buildColumn(status, items) {
 }
 
 async function loadQueue() {
+  await waitForIdentityInit();
   window.Identity.requireUser();
   setStatus("Loading requests...");
 
   try {
-    const token = await window.Identity.getToken();
-    const response = await fetch("/.netlify/functions/admin-list-requests", {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    const data = await response.json();
+    const response = await adminFetch("/.netlify/functions/admin-list-requests");
+    const data = await readJsonSafe(response);
     if (!response.ok) {
-      throw new Error(data.error || "Unable to load requests.");
+      const message =
+        data && typeof data === "object"
+          ? data.error || "Unable to load requests."
+          : data || "Unable to load requests.";
+      throw new Error(message);
+    }
+    if (!data || typeof data !== "object") {
+      throw new Error("Unable to load requests.");
     }
 
     const grouped = statuses.reduce((acc, status) => {
