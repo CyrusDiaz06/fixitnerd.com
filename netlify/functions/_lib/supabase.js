@@ -1,5 +1,5 @@
 function getEnv(name) {
-  return Netlify.env.get(name) || "";
+  return process.env[name] || "";
 }
 
 function getSupabaseConfig() {
