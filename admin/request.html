@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="../style.css">
   <link rel="stylesheet" href="../assets/css/app.css">
 </head>
-<body class="app-shell">
+<body class="app-shell no-mobile-bottom-nav">
   <header class="site-header">
     <nav class="nav-shell">
       <a href="/index.html" class="logo"><img src="../assets/logo.png" alt="Fix It Nerd logo"><span>FixItNerd</span></a>
@@ -15,8 +15,26 @@
         <li><a href="/admin/queue.html">Queue</a></li>
         <li><button class="cta-button" id="logoutBtn">Logout</button></li>
       </ul>
+      <button class="mobile-nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav-panel">
+        <span class="mobile-nav-bar"></span>
+        <span class="mobile-nav-bar"></span>
+        <span class="mobile-nav-bar"></span>
+        <span class="sr-only">Menu</span>
+      </button>
     </nav>
   </header>
+  <div class="mobile-nav-overlay"></div>
+  <div class="mobile-nav-panel" id="mobile-nav-panel" aria-hidden="true">
+    <div class="mobile-nav-links">
+      <a class="mobile-nav-link" href="/index.html">Home</a>
+      <a class="mobile-nav-link" href="/index.html#services">Services</a>
+      <a class="mobile-nav-link" href="/pricing.html">Bundles</a>
+      <a class="mobile-nav-link" href="/testimonials.html">Testimonials</a>
+      <a class="mobile-nav-link" href="/request.html">Contact</a>
+      <a class="mobile-nav-link" href="/about.html">About</a>
+      <a class="cta-button mobile-nav-cta" href="/request.html">Request a Quote</a>
+    </div>
+  </div>
 
   <section class="app-hero">
     <h1>Request Detail</h1>

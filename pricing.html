@@ -13,46 +13,68 @@
             <a href="index.html" class="logo"><img src="assets/logo.png" alt="Fix It Nerd logo"><span>FixItNerd</span></a>
             <ul class="nav-links">
                 <li><a href="index.html#services">Services</a></li>
+                <li><a href="about.html">About</a></li>
                 <li><a href="pricing.html">Bundles</a></li>
                 <li><a href="testimonials.html">Testimonials</a></li>
                 <li><a href="request.html">Contact</a></li>
                 <li><a href="request.html" class="cta-button">Request a Quote</a></li>
             </ul>
+            <button class="mobile-nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav-panel">
+                <span class="mobile-nav-bar"></span>
+                <span class="mobile-nav-bar"></span>
+                <span class="mobile-nav-bar"></span>
+                <span class="sr-only">Menu</span>
+            </button>
         </nav>
     </header>
+    <div class="mobile-nav-overlay"></div>
+    <div class="mobile-nav-panel" id="mobile-nav-panel" aria-hidden="true">
+        <div class="mobile-nav-links">
+            <a class="mobile-nav-link" href="index.html">Home</a>
+            <a class="mobile-nav-link" href="index.html#services">Services</a>
+            <a class="mobile-nav-link" href="pricing.html">Bundles</a>
+            <a class="mobile-nav-link" href="testimonials.html">Testimonials</a>
+            <a class="mobile-nav-link" href="request.html">Contact</a>
+            <a class="mobile-nav-link" href="about.html">About</a>
+            <a class="cta-button mobile-nav-cta" href="request.html">Request a Quote</a>
+        </div>
+    </div>
 
     <section class="section-shell">
         <div class="section-heading">
             <h1 class="section-title">Transparent Pricing</h1>
-            <p>Affordable tech solutions tailored to your needs with clear ranges and no surprise fees.</p>
+            <p>Beginner-friendly pricing with clear, rounded ranges and no surprise fees. Final price depends on project scope — you’ll always get a quote first.</p>
+            <p>Not sure what you need? We’ll help you figure it out — free.</p>
         </div>
 
         <div class="card-grid">
             <article class="service-tile">
                 <p class="card-eyebrow">Computer & IT Rescue</p>
                 <h3>Computer Repair & IT Support</h3>
-                <p>Diagnostics, cleanup, and device setup for homes and small teams.</p>
+                <p>Diagnostics, cleanup, and device setup for homes and small teams. Starting-at pricing below.</p>
                 <ul class="check-list">
-                    <li>Diagnostics: $25-38</li>
-                    <li>Virus removal: $50-100</li>
-                    <li>Hardware repair: $38-150</li>
-                    <li>Network setup: $75-200</li>
-                    <li>On-site support: $30/hour</li>
+                    <li>Diagnostics: $30 flat</li>
+                    <li>Virus / Malware removal: $60–$90</li>
+                    <li>Hardware repair: Starting at $80</li>
+                    <li>Network setup: Starting at $70</li>
+                    <li>On-site / Remote support: $50/hour</li>
                 </ul>
+                <p class="muted">Final price depends on scope and parts — you’ll always get a quote first.</p>
                 <a href="request.html" class="text-link">Request estimate</a>
             </article>
 
             <article class="service-tile">
                 <p class="card-eyebrow">Development & Automation</p>
                 <h3>Software + Web Projects</h3>
-                <p>Custom apps, scripts, and automation tailored to your workflows.</p>
+                <p>Custom apps, scripts, and web projects tailored to your workflows. Starting-at pricing below.</p>
                 <ul class="check-list">
-                    <li>Small scripts: $150-400</li>
-                    <li>Web apps: $1,000-5,000+</li>
-                    <li>Website design: $400-1,500</li>
-                    <li>Automation tools: $250-1,000</li>
-                    <li>Hourly support: $25-38/hour</li>
+                    <li>Small scripts / automations: Starting at $100</li>
+                    <li>Landing pages: $200–$500</li>
+                    <li>Small business websites: $300–$800</li>
+                    <li>Simple web apps: Starting at $900</li>
+                    <li>Ongoing support: $50/hour</li>
                 </ul>
+                <p class="muted">Final price depends on scope, content, and integrations — quote-based for larger projects.</p>
                 <a href="request.html" class="text-link">Get a project quote</a>
             </article>
 
@@ -61,11 +83,11 @@
                 <h3>Custom Prints & Prototypes</h3>
                 <p>Design-to-print help for replacement parts, models, and prototypes.</p>
                 <ul class="check-list">
-                    <li>Small prints: $8-20</li>
-                    <li>Medium prints: $20-50</li>
-                    <li>Large prints: $50-150+</li>
-                    <li>Custom design: +$25-100</li>
-                    <li>Rush orders: +13% fee</li>
+                    <li>Small prints: $10–20</li>
+                    <li>Medium prints: $25–45</li>
+                    <li>Large prints: $50–120+ (quote-based)</li>
+                    <li>Custom design: Starting at $25</li>
+                    <li>Rush orders: +15% rush fee</li>
                 </ul>
                 <a href="request.html" class="text-link">Talk print options</a>
             </article>
@@ -75,10 +97,10 @@
                 <h3>Coaching & Lessons</h3>
                 <p>Personalized tutoring for coding, homework, and digital skills.</p>
                 <ul class="check-list">
-                    <li>Hourly rate: $20-30/hour</li>
-                    <li>5-session pack: $90-135</li>
-                    <li>10-session pack: $175-250</li>
-                    <li>Group tutoring: $15-20/person</li>
+                    <li>Hourly rate: $25/hour</li>
+                    <li>5-session pack: $115</li>
+                    <li>10-session pack: $220 (Best Value)</li>
+                    <li>Group tutoring: $15/person</li>
                     <li>Online or in-person options</li>
                 </ul>
                 <a href="request.html" class="text-link">Book a session</a>
@@ -121,6 +143,38 @@
         <p>Local • Fast • Affordable • Friendly 😎</p>
         <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--text-gray);">© 2026 Fix It Nerd. All rights reserved.</p>
     </footer>
+    <nav class="mobile-bottom-nav" aria-label="Mobile navigation">
+        <a href="index.html">
+            <svg class="bottom-nav-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M4 11.5 12 5l8 6.5v7a1 1 0 0 1-1 1h-5v-5H10v5H5a1 1 0 0 1-1-1z" fill="currentColor"/>
+            </svg>
+            <span>Home</span>
+        </a>
+        <a href="index.html#services">
+            <svg class="bottom-nav-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M14.7 6.3a1 1 0 0 0-1.4 0l-1.2 1.2 2.2 2.2 1.2-1.2a1 1 0 0 0 0-1.4zM11 8.9 5 14.9V19h4.1l6-6z" fill="currentColor"/>
+            </svg>
+            <span>Services</span>
+        </a>
+        <a class="bottom-nav-cta" href="request.html">
+            <svg class="bottom-nav-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M4 6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H9l-5 4v-4H6a2 2 0 0 1-2-2z" fill="currentColor"/>
+            </svg>
+            <span>Request</span>
+        </a>
+        <a href="request.html">
+            <svg class="bottom-nav-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M4 5h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2zm0 2 8 5 8-5" fill="currentColor"/>
+            </svg>
+            <span>Contact</span>
+        </a>
+        <a href="about.html">
+            <svg class="bottom-nav-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 4a8 8 0 1 0 0 16 8 8 0 0 0 0-16zm0 3.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zm-1.5 5.5h3v5h-3z" fill="currentColor"/>
+            </svg>
+            <span>About</span>
+        </a>
+    </nav>
     <script src="script.js"></script>
 </body>
 </html>
