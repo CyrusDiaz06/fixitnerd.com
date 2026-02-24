@@ -1,166 +1,162 @@
-const queueEl = document.querySelector("#kanban");
-const statusEl = document.querySelector("#queueStatus");
-const statuses = ["NEW", "ESTIMATING", "SENT_TO_CUSTOMER", "PAID", "ARCHIVED"];
+// /assets/js/adminQueue.js
+(function () {
+  const statusEl = document.getElementById("queueStatus");
+  const kanbanEl = document.getElementById("kanban");
 
-function setStatus(message, type = "") {
-  statusEl.textContent = message;
-  statusEl.className = `notice ${type}`.trim();
-}
+  function setStatus(msg, type = "notice") {
+    if (!statusEl) return;
+    statusEl.textContent = msg;
+    statusEl.className = type; // uses your existing .notice style, but you can add .error if you want
+  }
 
-function formatDate(value) {
-  return new Date(value).toLocaleDateString();
-}
+  function escapeHtml(s) {
+    return String(s ?? "")
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+  }
 
-function waitForIdentityInit() {
-  return new Promise((resolve, reject) => {
-    if (!window.netlifyIdentity) {
-      reject(new Error("Netlify Identity not available."));
-      return;
+  async function getIdentityToken() {
+    // Works with identity widget + many custom wrappers
+    // 1) your identity.js wrapper (preferred)
+    if (window.Identity && typeof window.Identity.getToken === "function") {
+      return await window.Identity.getToken();
     }
-    let resolved = false;
-    const finish = (user) => {
-      if (resolved) {
-        return;
-      }
-      resolved = true;
-      resolve(user);
-    };
-    window.netlifyIdentity.on("init", finish);
-    window.netlifyIdentity.init();
-  });
-}
 
-async function adminFetch(url, options = {}) {
-  const token = await window.Identity.getToken();
-  const headers = new Headers(options.headers || {});
-  headers.set("Authorization", `Bearer ${token}`);
-  return fetch(url, { ...options, headers });
-}
+    // 2) netlifyIdentity global (fallback)
+    if (window.netlifyIdentity && typeof window.netlifyIdentity.currentUser === "function") {
+      const user = window.netlifyIdentity.currentUser();
+      if (!user) return null;
+      const jwt = await user.jwt();
+      return jwt;
+    }
 
-async function readJsonSafe(response) {
-  const text = await response.text();
-  if (!text) {
     return null;
   }
-  try {
-    return JSON.parse(text);
-  } catch (error) {
-    return text;
-  }
-}
 
-async function updateStatus(id, status) {
-  const response = await adminFetch("/.netlify/functions/admin-update-status", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ id, status }),
-  });
-  if (!response.ok) {
-    const data = await readJsonSafe(response);
-    const message =
-      data && typeof data === "object"
-        ? data.error || "Unable to update status."
-        : data || "Unable to update status.";
-    throw new Error(message);
-  }
-}
-
-function buildColumn(status, items) {
-  const column = document.createElement("div");
-  column.className = "kanban-column";
-  column.innerHTML = `<h3>${status}</h3>`;
-
-  if (items.length === 0) {
-    const empty = document.createElement("p");
-    empty.textContent = "No requests.";
-    empty.className = "app-pill";
-    column.appendChild(empty);
-    return column;
-  }
-
-  items.forEach((item) => {
-    const card = document.createElement("div");
-    card.className = "kanban-card";
-    card.innerHTML = `
-      <a href="/admin/request.html?id=${item.id}">${item.title}</a>
-      <p class="app-pill">${item.service_type} · ${item.urgency || "standard"}</p>
-      <p>From ${item.name}</p>
-      <p class="app-pill">${formatDate(item.created_at)}</p>
-    `;
-
-    const select = document.createElement("select");
-    statuses.forEach((option) => {
-      const opt = document.createElement("option");
-      opt.value = option;
-      opt.textContent = option.replace(/_/g, " ");
-      if (option === item.status) {
-        opt.selected = true;
-      }
-      select.appendChild(opt);
-    });
-
-    select.addEventListener("change", async () => {
-      try {
-        await updateStatus(item.id, select.value);
-        setStatus(`Status updated for ${item.title}.`);
-      } catch (error) {
-        setStatus(error.message, "error");
-      }
-    });
-
-    card.appendChild(select);
-    column.appendChild(card);
-  });
-
-  return column;
-}
-
-async function loadQueue() {
-  await waitForIdentityInit();
-  window.Identity.requireUser();
-  setStatus("Loading requests...");
-
-  try {
-    const response = await adminFetch("/.netlify/functions/admin-list-requests");
-    const data = await readJsonSafe(response);
-    if (!response.ok) {
-      const message =
-        data && typeof data === "object"
-          ? data.error || "Unable to load requests."
-          : data || "Unable to load requests.";
-      throw new Error(message);
-    }
-    if (!data || typeof data !== "object") {
-      throw new Error("Unable to load requests.");
+  async function fetchRequests() {
+    const token = await getIdentityToken();
+    if (!token) {
+      // Send them back to login if not logged in
+      window.location.href = "/admin/login.html";
+      return [];
     }
 
-    const requests = Array.isArray(data?.requests) ? data.requests : [];
-    const grouped = statuses.reduce((acc, status) => {
-      acc[status] = [];
-      return acc;
-    }, {});
-
-    requests.forEach((request) => {
-      const list = grouped[request.status] || grouped.NEW;
-      list.push(request);
+    const res = await fetch("/.netlify/functions/admin-list-requests", {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "application/json",
+      },
     });
 
-    queueEl.innerHTML = "";
-    statuses.forEach((status) => {
-      queueEl.appendChild(buildColumn(status, grouped[status] || []));
-    });
-
-    if (requests.length === 0) {
-      setStatus("No requests yet");
-      return;
+    // If the function returns a plain-text error, this will still work.
+    const text = await res.text();
+    let data;
+    try {
+      data = text ? JSON.parse(text) : {};
+    } catch {
+      // Non-JSON response (common when a function throws)
+      throw new Error(text || `Request failed (${res.status})`);
     }
 
-    setStatus(`Loaded ${requests.length} requests.`);
-  } catch (error) {
-    setStatus(error.message || "Unable to load queue.", "error");
-  }
-}
+    if (!res.ok || data.ok === false) {
+      throw new Error(data.error || `Request failed (${res.status})`);
+    }
 
-loadQueue();
+    // Normalize shapes:
+    // - { ok:true, requests:[...] }
+    // - { data:[...] }
+    // - { ok:true }  -> empty
+    const arr =
+      (Array.isArray(data.requests) && data.requests) ||
+      (Array.isArray(data.data) && data.data) ||
+      [];
+
+    return arr;
+  }
+
+  function groupByStatus(requests) {
+    const buckets = {
+      NEW: [],
+      ESTIMATING: [],
+      INVOICED: [],
+      PAID: [],
+      IN_PROGRESS: [],
+      DONE: [],
+    };
+
+    for (const r of requests) {
+      const key = (r.status || "NEW").toUpperCase();
+      if (!buckets[key]) buckets[key] = [];
+      buckets[key].push(r);
+    }
+
+    return buckets;
+  }
+
+  function renderKanban(groups) {
+    if (!kanbanEl) return;
+
+    const columns = Object.entries(groups);
+
+    kanbanEl.innerHTML = columns
+      .map(([status, items]) => {
+        const cards = items
+          .map((r) => {
+            const title = escapeHtml(r.title || "(No title)");
+            const name = escapeHtml(r.name || "");
+            const service = escapeHtml(r.service_type || "");
+            const created = escapeHtml(r.created_at || "");
+            const publicId = escapeHtml(r.public_id || "");
+            return `
+              <div class="kanban-card">
+                <div class="kanban-card__title">${title}</div>
+                <div class="kanban-card__meta">
+                  <div><strong>Name:</strong> ${name}</div>
+                  <div><strong>Service:</strong> ${service}</div>
+                  ${publicId ? `<div><strong>ID:</strong> ${publicId}</div>` : ""}
+                  ${created ? `<div><strong>Created:</strong> ${created}</div>` : ""}
+                </div>
+              </div>
+            `;
+          })
+          .join("");
+
+        return `
+          <section class="kanban-col">
+            <header class="kanban-col__header">
+              <h3>${escapeHtml(status)}</h3>
+              <span class="kanban-col__count">${items.length}</span>
+            </header>
+            <div class="kanban-col__body">
+              ${cards || `<div class="kanban-empty">No requests</div>`}
+            </div>
+          </section>
+        `;
+      })
+      .join("");
+  }
+
+  async function init() {
+    try {
+      setStatus("Loading...", "notice");
+
+      const requests = await fetchRequests();
+      const groups = groupByStatus(requests);
+      renderKanban(groups);
+
+      const total = requests.length;
+      setStatus(total ? `Loaded ${total} request(s).` : "No requests yet.", "notice");
+    } catch (err) {
+      console.error(err);
+      setStatus(err.message || "Failed to load queue.", "error");
+      // If you're getting random auth failures, bounce to login:
+      // window.location.href = "/admin/login.html";
+    }
+  }
+
+  init();
+})();
