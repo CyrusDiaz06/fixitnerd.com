@@ -18,32 +18,33 @@ body.app-shell {
     radial-gradient(circle at 20% 10%, rgba(74, 163, 255, 0.08), transparent 40%),
     var(--app-bg);
   color: var(--app-text);
-  font-family: "Segoe UI", system-ui, sans-serif;
+  font-family: var(--body-font);
   min-height: 100vh;
 }
 
 .app-hero {
   padding: 4rem 6vw 2rem;
-  text-align: left;
+  text-align: center;
 }
 
 .app-hero h1 {
   font-size: clamp(2rem, 4vw, 3rem);
   margin-bottom: 0.5rem;
+  font-family: var(--title-font);
+  color: var(--cyan);
 }
 
 .app-hero p {
   max-width: 640px;
-  color: var(--app-muted);
-}
-
-.request-page .app-hero {
-  text-align: center;
-}
-
-.request-page .app-hero p {
+  color: var(--text-gray);
   margin-left: auto;
   margin-right: auto;
+}
+
+.app-card h2,
+.app-card h3 {
+  font-family: var(--title-font);
+  color: var(--cyan);
 }
 
 .app-container {
@@ -98,12 +99,14 @@ body.app-shell {
 }
 
 .app-button {
-  background: var(--app-accent);
-  color: #06130f;
+  background: var(--accent);
+  color: var(--white);
   border: none;
-  border-radius: 999px;
+  border-radius: var(--button-radius);
   padding: 0.75rem 1.6rem;
-  font-weight: 700;
+  font-weight: var(--button-font-weight);
+  font-size: var(--button-font-size);
+  letter-spacing: var(--button-letter-spacing);
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
@@ -111,7 +114,7 @@ body.app-shell {
 .app-button.secondary {
   background: transparent;
   border: 1px solid var(--app-border);
-  color: var(--app-text);
+  color: var(--text-gray);
 }
 
 .app-button:hover {
