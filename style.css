@@ -16,13 +16,27 @@
     --cyan: #00E5FF;
     --lime: #ADFF2F;
     --mobile-nav-height: 78px;
+    --title-font: 'Playfair Display', 'Times New Roman', serif;
+    --body-font: 'Manrope', 'Helvetica Neue', Arial, sans-serif;
+    --button-radius: 12px;
+    --button-font-size: 0.95rem;
+    --button-font-weight: 700;
+    --button-letter-spacing: 0.02em;
 }
 
 body {
-    font-family: 'Manrope', 'Helvetica Neue', Arial, sans-serif;
+    font-family: var(--body-font);
     line-height: 1.6;
     color: var(--text-gray);
     background: radial-gradient(circle at top, rgba(45, 40, 68, 0.85), var(--primary-dark));
+}
+
+h1,
+h2,
+h3 {
+    font-family: var(--title-font);
+    letter-spacing: 0.01em;
+    line-height: 1.2;
 }
 
 /* Header & Navigation */
@@ -267,9 +281,11 @@ body.mobile-nav-open .mobile-nav-panel {
     background-color: var(--accent);
     color: var(--white);
     padding: 0.7rem 1.5rem;
-    border-radius: 5px;
+    border-radius: var(--button-radius);
     text-decoration: none;
-    font-weight: bold;
+    font-weight: var(--button-font-weight);
+    font-size: var(--button-font-size);
+    letter-spacing: var(--button-letter-spacing);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     border: none;
     cursor: pointer;
@@ -343,9 +359,11 @@ body.mobile-nav-open .mobile-nav-panel {
     border: 1px solid var(--cyan);
     color: var(--cyan);
     padding: 0.7rem 1.5rem;
-    border-radius: 5px;
+    border-radius: var(--button-radius);
     text-decoration: none;
-    font-weight: bold;
+    font-weight: var(--button-font-weight);
+    font-size: var(--button-font-size);
+    letter-spacing: var(--button-letter-spacing);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -420,12 +438,13 @@ body.mobile-nav-open .mobile-nav-panel {
     align-items: center;
     justify-content: center;
     padding: 0.4rem 1rem;
-    border-radius: 999px;
+    border-radius: var(--button-radius);
     background: var(--accent);
     color: var(--white);
     text-decoration: none;
     font-weight: 700;
     font-size: 0.85rem;
+    letter-spacing: var(--button-letter-spacing);
 }
 
 /* Services Section */
@@ -502,6 +521,12 @@ body.mobile-nav-open .mobile-nav-panel {
     max-width: 680px;
     margin: 0.5rem auto 0;
     color: var(--text-gray);
+}
+
+.section-heading h2:not(.section-title) {
+    margin-top: 0.6rem;
+    font-size: 1.6rem;
+    color: var(--white);
 }
 
 .card-grid {
