@@ -1,184 +1,923 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fix It Nerd - Tech Help Without the Headache</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FixItNerd – Computer Repair, 3D Printing & Software Development</title>
+  <meta name="description" content="FixItNerd offers expert computer repair, custom 3D printing, and software & web development services. Fast, reliable, and affordable tech solutions." />
+  <meta name="robots" content="index, follow" />
+  <meta property="og:title" content="FixItNerd – Computer Repair, 3D Printing & Software Development" />
+  <meta property="og:description" content="Fast, reliable tech services: computer repair, 3D printing, and web/software development." />
+  <meta property="og:url" content="https://fixitnerd.com" />
+  <meta property="og:type" content="website" />
+  <link rel="canonical" href="https://fixitnerd.com" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #080d14;
+      --bg-surface: #0d1521;
+      --bg-card: #111924;
+      --accent: #3b82f6;
+      --accent-light: #60a5fa;
+      --accent-dim: rgba(59,130,246,0.12);
+      --border: rgba(255,255,255,0.07);
+      --border-accent: rgba(59,130,246,0.3);
+      --text: #e2eaf4;
+      --text-muted: #7a8a9e;
+      --text-dim: #3d5068;
+      --heading: #f0f6ff;
+      --radius: 10px;
+      --radius-lg: 16px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'IBM Plex Sans', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── Grid texture ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(59,130,246,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(59,130,246,0.03) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 clamp(1.5rem, 5vw, 4rem);
+      height: 64px;
+      background: rgba(8,13,20,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.25rem;
+      color: var(--heading);
+      text-decoration: none;
+      letter-spacing: -0.01em;
+    }
+
+    .nav-logo span { color: var(--accent-light); }
+
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    .nav-cta {
+      font-size: 0.875rem;
+      font-weight: 500;
+      padding: 0.5rem 1.25rem;
+      border-radius: var(--radius);
+      background: var(--accent);
+      color: #fff;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .nav-cta:hover { background: var(--accent-light); transform: translateY(-1px); }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 8rem clamp(1.5rem, 5vw, 6rem) 6rem;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .hero-glow {
+      position: absolute;
+      top: -10%;
+      right: -5%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(ellipse at center, rgba(59,130,246,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-inner { max-width: 680px; }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent-light);
+      border: 1px solid var(--border-accent);
+      background: var(--accent-dim);
+      padding: 0.35rem 0.85rem;
+      border-radius: 99px;
+      margin-bottom: 1.75rem;
+    }
+
+    .hero-badge::before {
+      content: '';
+      display: inline-block;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent-light);
+    }
+
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2.4rem, 5.5vw, 4rem);
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      color: var(--heading);
+      margin-bottom: 1.5rem;
+    }
+
+    h1 em {
+      font-style: normal;
+      color: var(--accent-light);
+    }
+
+    .hero-sub {
+      font-size: 1.1rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      max-width: 520px;
+      margin-bottom: 2.5rem;
+      line-height: 1.75;
+    }
+
+    .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+    .btn-primary {
+      padding: 0.75rem 1.75rem;
+      border-radius: var(--radius);
+      background: var(--accent);
+      color: #fff;
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 500;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      display: inline-block;
+    }
+    .btn-primary:hover { background: var(--accent-light); transform: translateY(-2px); }
+
+    .btn-secondary {
+      padding: 0.75rem 1.75rem;
+      border-radius: var(--radius);
+      background: transparent;
+      color: var(--text);
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 500;
+      text-decoration: none;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s, transform 0.15s;
+      display: inline-block;
+    }
+    .btn-secondary:hover { border-color: rgba(255,255,255,0.2); color: var(--heading); transform: translateY(-2px); }
+
+    .hero-stats {
+      display: flex;
+      gap: 2.5rem;
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+
+    .stat-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--heading);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+
+    /* ── SECTIONS ── */
+    section { position: relative; z-index: 1; }
+
+    .section-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 6rem clamp(1.5rem, 5vw, 3rem);
+    }
+
+    .section-label {
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent-light);
+      margin-bottom: 0.75rem;
+    }
+
+    h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.75rem);
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      color: var(--heading);
+      line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+
+    .section-sub {
+      font-size: 1rem;
+      color: var(--text-muted);
+      max-width: 520px;
+      margin-bottom: 3.5rem;
+      font-weight: 300;
+    }
+
+    /* ── SERVICES ── */
+    #services { background: var(--bg-surface); }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .service-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      transition: border-color 0.25s, transform 0.25s;
+    }
+    .service-card:hover { border-color: var(--border-accent); transform: translateY(-4px); }
+
+    .service-icon {
+      width: 48px; height: 48px;
+      border-radius: var(--radius);
+      background: var(--accent-dim);
+      border: 1px solid var(--border-accent);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 1.5rem;
+      font-size: 1.4rem;
+    }
+
+    h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--heading);
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.01em;
+    }
+
+    .service-desc {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      font-weight: 300;
+      margin-bottom: 1.25rem;
+      line-height: 1.7;
+    }
+
+    .service-items {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .service-items li {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .service-items li::before {
+      content: '';
+      display: inline-block;
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+
+    /* ── PRICING ── */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      align-items: start;
+    }
+
+    .pricing-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      transition: border-color 0.25s, transform 0.25s;
+    }
+    .pricing-card:hover { transform: translateY(-4px); }
+
+    .pricing-card.featured {
+      border-color: var(--accent);
+      position: relative;
+    }
+
+    .featured-badge {
+      position: absolute;
+      top: -12px; left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      background: var(--accent);
+      color: #fff;
+      padding: 0.25rem 0.85rem;
+      border-radius: 99px;
+      white-space: nowrap;
+    }
+
+    .pricing-category {
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent-light);
+      margin-bottom: 0.6rem;
+    }
+
+    .pricing-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--heading);
+      margin-bottom: 0.4rem;
+    }
+
+    .pricing-desc {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      font-weight: 300;
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+
+    .price-from {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-bottom: 0.2rem;
+    }
+
+    .price-amount {
+      font-family: 'Syne', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--heading);
+      line-height: 1;
+      margin-bottom: 1.5rem;
+    }
+
+    .price-amount sup {
+      font-size: 1rem;
+      vertical-align: super;
+      font-weight: 400;
+      color: var(--text-muted);
+    }
+
+    .pricing-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 1.25rem 0;
+    }
+
+    .pricing-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .pricing-features li {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+    }
+
+    .check {
+      color: var(--accent-light);
+      font-weight: 500;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .pricing-cta {
+      display: block;
+      text-align: center;
+      padding: 0.7rem 1rem;
+      border-radius: var(--radius);
+      font-size: 0.9rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .pricing-cta-outline {
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+    .pricing-cta-outline:hover { border-color: rgba(255,255,255,0.25); color: var(--heading); }
+
+    .pricing-cta-filled {
+      background: var(--accent);
+      color: #fff;
+      border: 1px solid transparent;
+    }
+    .pricing-cta-filled:hover { background: var(--accent-light); }
+
+    .pricing-note {
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 2.5rem;
+    }
+
+    .pricing-note a { color: var(--accent-light); text-decoration: none; }
+    .pricing-note a:hover { text-decoration: underline; }
+
+    /* ── CONTACT ── */
+    #contact { background: var(--bg-surface); }
+
+    .contact-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    @media (max-width: 720px) {
+      .contact-wrapper { grid-template-columns: 1fr; gap: 2.5rem; }
+    }
+
+    .contact-info h2 { margin-bottom: 0.75rem; }
+
+    .contact-info p {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      font-weight: 300;
+      margin-bottom: 2rem;
+      line-height: 1.75;
+    }
+
+    .contact-detail {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 0.85rem;
+    }
+
+    .contact-detail-icon {
+      width: 36px; height: 36px;
+      border-radius: 8px;
+      background: var(--accent-dim);
+      border: 1px solid var(--border-accent);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .contact-form {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    @media (max-width: 480px) {
+      .form-row { grid-template-columns: 1fr; }
+    }
+
+    .form-group { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1rem; }
+
+    label {
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      letter-spacing: 0.03em;
+    }
+
+    input, select, textarea {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text);
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 0.92rem;
+      padding: 0.7rem 1rem;
+      outline: none;
+      width: 100%;
+      transition: border-color 0.2s;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--accent);
+    }
+
+    input::placeholder, textarea::placeholder { color: var(--text-dim); }
+
+    select option { background: var(--bg-card); }
+
+    textarea { resize: vertical; min-height: 120px; }
+
+    .form-submit {
+      width: 100%;
+      padding: 0.8rem;
+      border: none;
+      border-radius: var(--radius);
+      background: var(--accent);
+      color: #fff;
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .form-submit:hover { background: var(--accent-light); transform: translateY(-1px); }
+
+    /* ── FOOTER ── */
+    footer {
+      position: relative; z-index: 1;
+      border-top: 1px solid var(--border);
+      padding: 2rem clamp(1.5rem, 5vw, 4rem);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--heading);
+      text-decoration: none;
+    }
+
+    .footer-logo span { color: var(--accent-light); }
+
+    .footer-copy {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--text); }
+
+    /* ── MOBILE NAV ── */
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      width: 38px; height: 38px;
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .menu-toggle span {
+      display: block;
+      width: 18px; height: 1.5px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: all 0.2s;
+    }
+
+    @media (max-width: 720px) {
+      .nav-links, .nav-cta { display: none; }
+      .menu-toggle { display: flex; }
+    }
+
+    /* ── ANIMATIONS ── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+  </style>
 </head>
 <body>
-    <!-- Header & Navigation -->
-    <header class="site-header">
-        <nav class="nav-shell">
-            <a href="index.html" class="logo"><img src="assets/logo.png" alt="Fix It Nerd logo"><span>FixItNerd</span></a>
-            <ul class="nav-links">
-                <li><a href="#services">Services</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="pricing.html">Bundles</a></li>
-                <li><a href="testimonials.html">Testimonials</a></li>
-                <li><a href="request.html">Contact</a></li>
-                <li><a href="request.html" class="cta-button">Request a Quote</a></li>
-            </ul>
-            <button class="mobile-nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav-panel">
-                <span class="mobile-nav-bar"></span>
-                <span class="mobile-nav-bar"></span>
-                <span class="mobile-nav-bar"></span>
-                <span class="sr-only">Menu</span>
-            </button>
-        </nav>
-    </header>
-    <div class="mobile-nav-overlay"></div>
-    <div class="mobile-nav-panel" id="mobile-nav-panel" aria-hidden="true">
-        <div class="mobile-nav-links">
-            <a class="mobile-nav-link" href="index.html">Home</a>
-            <a class="mobile-nav-link" href="index.html#services">Services</a>
-            <a class="mobile-nav-link" href="pricing.html">Bundles</a>
-            <a class="mobile-nav-link" href="testimonials.html">Testimonials</a>
-            <a class="mobile-nav-link" href="request.html">Contact</a>
-            <a class="mobile-nav-link" href="about.html">About</a>
-            <a class="cta-button mobile-nav-cta" href="request.html">Request a Quote</a>
-        </div>
+
+<!-- NAV -->
+<nav aria-label="Main navigation">
+  <a href="#" class="nav-logo">FixIt<span>Nerd</span></a>
+  <ul class="nav-links" role="list">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Get a Quote</a>
+  <button class="menu-toggle" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero" aria-label="Hero">
+  <div class="hero-glow" aria-hidden="true"></div>
+  <div class="hero-inner">
+    <div class="hero-badge">Tech solutions you can count on</div>
+    <h1>Fix it fast.<br/>Build it <em>right</em>.</h1>
+    <p class="hero-sub">
+      Expert computer repair, custom 3D printing, and professional software & web development — all in one place.
+    </p>
+    <div class="hero-actions">
+      <a href="#services" class="btn-primary">See What We Do</a>
+      <a href="#contact" class="btn-secondary">Get a Free Quote</a>
     </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">Same-day</div>
+        <div class="stat-label">Diagnostics available</div>
+      </div>
+      <div>
+        <div class="stat-num">3 Services</div>
+        <div class="stat-label">Under one roof</div>
+      </div>
+      <div>
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Satisfaction guaranteed</div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <!-- Hero Section -->
-    <section class="hero hero-split">
-        <div class="hero-content">
-            <p class="hero-eyebrow">Friendly tech help for homes and small businesses.</p>
-            <h1>Fix. Learn. Create.<br>We Make Tech Easy.</h1>
-            <p class="subtagline">No geek-speak, just solutions that get you back to work and play.</p>
-            <div class="hero-actions">
-                <a href="request.html" class="cta-button">Get a Free Consultation</a>
-                <a href="pricing.html" class="ghost-button">See Our Packages</a>
-            </div>
-            <div class="hero-trust">
-                <span>Local</span>
-                <span>Fast</span>
-                <span>Affordable</span>
-                <span>Friendly</span>
-            </div>
-        </div>
-        <div class="hero-visual">
-            <div class="hero-card">
-                <p class="hero-card-title">Home Tech Hero</p>
-                <p class="hero-card-sub">PC tuneups, wifi fixes, device setup</p>
-                <a class="mini-button" href="pricing.html">Book Now</a>
-            </div>
-            <div class="hero-card">
-                <p class="hero-card-title">Student Success Pack</p>
-                <p class="hero-card-sub">Coding lessons, homework help</p>
-                <a class="mini-button" href="pricing.html">Learn More</a>
-            </div>
-            <div class="hero-card">
-                <p class="hero-card-title">Small Biz Starter</p>
-                <p class="hero-card-sub">Website, Google setup, support</p>
-                <a class="mini-button" href="pricing.html">Get Started</a>
-            </div>
-        </div>
-    </section>
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-inner">
+    <p class="section-label fade-up">What we do</p>
+    <h2 class="fade-up">Services</h2>
+    <p class="section-sub fade-up">From broken hardware to custom websites, FixItNerd handles it all with precision and care.</p>
+    <div class="services-grid">
 
-    <!-- Services Section -->
-    <section id="services" class="services section-shell">
-        <div class="section-heading">
-            <h2 class="section-title">Our Services</h2>
-            <p>Practical help for real life tech problems, delivered in plain English.</p>
-        </div>
-        <div class="card-grid">
-            <article class="service-tile">
-                <h3>Computer & IT Rescue</h3>
-                <p>Speedups, virus removal, device setup, and network fixes.</p>
-                <a class="text-link" href="request.html">Book Now</a>
-            </article>
-            <article class="service-tile">
-                <h3>Tutoring & Coaching</h3>
-                <p>Coding lessons, homework help, and digital skills training.</p>
-                <a class="text-link" href="request.html">Learn More</a>
-            </article>
-            <article class="service-tile">
-                <h3>3D Printing & Custom Builds</h3>
-                <p>Prototypes, replacement parts, and custom maker projects.</p>
-                <a class="text-link" href="request.html">Get Started</a>
-            </article>
-            <article class="service-tile">
-                <h3>Development & Automation</h3>
-                <p>Website development, software development, mobile app development, and scripting/automation services.</p>
-                <a class="text-link" href="request.html">See Options</a>
-            </article>
-        </div>
-    </section>
+      <article class="service-card fade-up">
+        <div class="service-icon" aria-hidden="true">🖥️</div>
+        <h3>Computer Repair</h3>
+        <p class="service-desc">Fast, reliable repairs for laptops and desktops. We diagnose the problem, fix it right, and get you back up and running.</p>
+        <ul class="service-items">
+          <li>Virus & malware removal</li>
+          <li>Hardware repair & replacement</li>
+          <li>Data recovery</li>
+          <li>OS reinstallation & setup</li>
+          <li>Performance tuning</li>
+          <li>Screen & battery replacement</li>
+        </ul>
+      </article>
 
-    <!-- About Section -->
-    <section id="about" class="about highlight-band">
-        <div class="about-content">
-            <h2>Tech Help Without the Jargon!</h2>
-            <p>
-                "He fixed my laptop and actually taught me how to use it." - Sarah M.
-            </p>
-        </div>
-    </section>
+      <article class="service-card fade-up">
+        <div class="service-icon" aria-hidden="true">📦</div>
+        <h3>3D Printing</h3>
+        <p class="service-desc">Need a custom part, prototype, or creative design? We print it accurately and affordably with professional-grade results.</p>
+        <ul class="service-items">
+          <li>Custom part fabrication</li>
+          <li>Prototyping & product mockups</li>
+          <li>Replacement & hard-to-find parts</li>
+          <li>Functional & decorative prints</li>
+          <li>Multi-material options</li>
+          <li>Design-to-print service</li>
+        </ul>
+      </article>
 
-    <section class="section-shell">
-        <div class="section-heading">
-            <h2 class="section-title">Why Choose FixItNerd?</h2>
-            <p>Local service, clear communication, and no surprise pricing.</p>
-        </div>
-        <div class="card-grid tight">
-            <article class="pill-card">
-                <h3>Local & Reliable</h3>
-                <p>Fast help from a neighborhood expert who shows up.</p>
-            </article>
-            <article class="pill-card">
-                <h3>Plain English</h3>
-                <p>Tech explained clearly, without the buzzwords.</p>
-            </article>
-            <article class="pill-card">
-                <h3>Affordable & Honest</h3>
-                <p>Transparent estimates and flexible options.</p>
-            </article>
-        </div>
-        <div class="cta-row">
-            <a href="request.html" class="cta-button">Book a Free Consultation</a>
-            <a href="pricing.html" class="ghost-button">View Pricing & Bundles</a>
-        </div>
-    </section>
+      <article class="service-card fade-up">
+        <div class="service-icon" aria-hidden="true">💻</div>
+        <h3>Software & Web Dev</h3>
+        <p class="service-desc">Professional websites and custom software built to perform. Clean code, great UX, and built to grow with your business.</p>
+        <ul class="service-items">
+          <li>Business & portfolio websites</li>
+          <li>E-commerce solutions</li>
+          <li>Web application development</li>
+          <li>Automation & scripting</li>
+          <li>SEO & performance optimization</li>
+          <li>Ongoing maintenance plans</li>
+        </ul>
+      </article>
 
-    <!-- Footer -->
-    <footer>
-        <p><strong>Fix It Nerd</strong> - Tech Help Without the Headache</p>
-        <p>Local • Fast • Affordable • Friendly 😎</p>
-        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--text-gray);">© 2026 Fix It Nerd. All rights reserved.</p>
-    </footer>
-    <nav class="mobile-bottom-nav" aria-label="Mobile navigation">
-        <a href="index.html">
-            <svg class="bottom-nav-icon" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M4 11.5 12 5l8 6.5v7a1 1 0 0 1-1 1h-5v-5H10v5H5a1 1 0 0 1-1-1z" fill="currentColor"/>
-            </svg>
-            <span>Home</span>
-        </a>
-        <a href="index.html#services">
-            <svg class="bottom-nav-icon" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M14.7 6.3a1 1 0 0 0-1.4 0l-1.2 1.2 2.2 2.2 1.2-1.2a1 1 0 0 0 0-1.4zM11 8.9 5 14.9V19h4.1l6-6z" fill="currentColor"/>
-            </svg>
-            <span>Services</span>
-        </a>
-        <a class="bottom-nav-cta" href="request.html">
-            <svg class="bottom-nav-icon" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M4 6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H9l-5 4v-4H6a2 2 0 0 1-2-2z" fill="currentColor"/>
-            </svg>
-            <span>Request</span>
-        </a>
-        <a href="request.html">
-            <svg class="bottom-nav-icon" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M4 5h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2zm0 2 8 5 8-5" fill="currentColor"/>
-            </svg>
-            <span>Contact</span>
-        </a>
-        <a href="about.html">
-            <svg class="bottom-nav-icon" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M12 4a8 8 0 1 0 0 16 8 8 0 0 0 0-16zm0 3.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zm-1.5 5.5h3v5h-3z" fill="currentColor"/>
-            </svg>
-            <span>About</span>
-        </a>
-    </nav>
-    <script src="script.js"></script>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="section-inner">
+    <p class="section-label fade-up">Transparent rates</p>
+    <h2 class="fade-up">Pricing</h2>
+    <p class="section-sub fade-up">Straightforward pricing with no hidden fees. Not sure what you need? Reach out for a free estimate.</p>
+    <div class="pricing-grid">
+
+      <!-- Computer Repair -->
+      <div class="pricing-card fade-up">
+        <div class="pricing-category">Computer Repair</div>
+        <div class="pricing-title">Diagnostics & Repair</div>
+        <p class="pricing-desc">Flat-rate diagnostics. Most repairs quoted upfront before any work begins.</p>
+        <div class="price-from">Starting from</div>
+        <div class="price-amount"><sup>$</sup>50</div>
+        <div class="pricing-divider"></div>
+        <ul class="pricing-features">
+          <li><span class="check">✓</span> Full hardware & software diagnostics — $50</li>
+          <li><span class="check">✓</span> Virus & malware removal — from $75</li>
+          <li><span class="check">✓</span> OS reinstall & setup — $100</li>
+          <li><span class="check">✓</span> Hardware repair — from $100</li>
+          <li><span class="check">✓</span> Data recovery — from $150</li>
+          <li><span class="check">✓</span> Same-day service available</li>
+        </ul>
+        <a href="#contact" class="pricing-cta pricing-cta-outline">Book a Repair</a>
+      </div>
+
+      <!-- 3D Printing -->
+      <div class="pricing-card featured fade-up">
+        <div class="featured-badge">Popular</div>
+        <div class="pricing-category">3D Printing</div>
+        <div class="pricing-title">Custom Prints</div>
+        <p class="pricing-desc">Priced by material, size, and complexity. Send us your file or idea for a free quote.</p>
+        <div class="price-from">Starting from</div>
+        <div class="price-amount"><sup>$</sup>15</div>
+        <div class="pricing-divider"></div>
+        <ul class="pricing-features">
+          <li><span class="check">✓</span> Small prints (under 10cm) — from $15</li>
+          <li><span class="check">✓</span> Medium prints (10–20cm) — from $35</li>
+          <li><span class="check">✓</span> Large prints (20cm+) — from $75</li>
+          <li><span class="check">✓</span> Custom design service — quoted</li>
+          <li><span class="check">✓</span> Multi-color & flexible filament available</li>
+          <li><span class="check">✓</span> Fast turnaround</li>
+        </ul>
+        <a href="#contact" class="pricing-cta pricing-cta-filled">Get a Print Quote</a>
+      </div>
+
+      <!-- Web Dev -->
+      <div class="pricing-card fade-up">
+        <div class="pricing-category">Web & Software Dev</div>
+        <div class="pricing-title">Custom Development</div>
+        <p class="pricing-desc">Project-based pricing. Every quote is scoped to your specific goals and timeline.</p>
+        <div class="price-from">Starting from</div>
+        <div class="price-amount"><sup>$</sup>150</div>
+        <div class="pricing-divider"></div>
+        <ul class="pricing-features">
+          <li><span class="check">✓</span> Landing page / single page — from $150</li>
+          <li><span class="check">✓</span> Portfolio / small site — from $300</li>
+          <li><span class="check">✓</span> Business website — from $600</li>
+          <li><span class="check">✓</span> E-commerce store — from $900</li>
+          <li><span class="check">✓</span> Custom web app — custom quote</li>
+          <li><span class="check">✓</span> SEO setup included on all projects</li>
+        </ul>
+        <a href="#contact" class="pricing-cta pricing-cta-outline">Discuss Your Project</a>
+      </div>
+
+    </div>
+    <p class="pricing-note fade-up">All prices are estimates. <a href="#contact">Contact us</a> for a free, no-obligation quote tailored to your needs.</p>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-inner">
+    <div class="contact-wrapper">
+      <div class="contact-info">
+        <p class="section-label fade-up">Get in touch</p>
+        <h2 class="fade-up">Let's fix it<br/>together.</h2>
+        <p class="fade-up">Have a question, need a quote, or ready to get started? Send us a message and we'll get back to you fast — usually same day.</p>
+        <div class="contact-detail fade-up">
+          <div class="contact-detail-icon" aria-hidden="true">📧</div>
+          <span>diaz@fixitnerd.com</span>
+        </div>
+        <div class="contact-detail fade-up">
+          <div class="contact-detail-icon" aria-hidden="true">📍</div>
+          <span>Charlotte, North Carolina</span>
+        </div>
+        <div class="contact-detail fade-up">
+          <div class="contact-detail-icon" aria-hidden="true">⏱️</div>
+          <span>Replies within a few hours</span>
+        </div>
+      </div>
+
+      <div class="contact-form fade-up">
+        <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+          <input type="hidden" name="form-name" value="contact" />
+          <p style="display:none"><input name="bot-field" /></p>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="fname">First name</label>
+              <input type="text" id="fname" name="first-name" placeholder="Jane" required />
+            </div>
+            <div class="form-group">
+              <label for="lname">Last name</label>
+              <input type="text" id="lname" name="last-name" placeholder="Smith" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email address</label>
+            <input type="email" id="email" name="email" placeholder="jane@example.com" required />
+          </div>
+
+          <div class="form-group">
+            <label for="service">Service needed</label>
+            <select id="service" name="service">
+              <option value="">Select a service…</option>
+              <option value="computer-repair">Computer Repair</option>
+              <option value="3d-printing">3D Printing</option>
+              <option value="web-dev">Web / Software Development</option>
+              <option value="other">Other / Not sure</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="message">Tell us about your project</label>
+            <textarea id="message" name="message" placeholder="Describe what you need help with…" required></textarea>
+          </div>
+
+          <button type="submit" class="form-submit">Send Message →</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#" class="footer-logo">FixIt<span>Nerd</span></a>
+  <span class="footer-copy">© 2025 FixItNerd. All rights reserved.</span>
+  <nav class="footer-links" aria-label="Footer navigation">
+    <a href="#services">Services</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver(
+    (entries) => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+    { threshold: 0.12 }
+  );
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+
 </body>
 </html>
